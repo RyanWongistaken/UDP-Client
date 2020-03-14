@@ -1,3 +1,0 @@
-include ':app'
-rootProject.name='UDPclient'
-include ':OpenCV4java420'
