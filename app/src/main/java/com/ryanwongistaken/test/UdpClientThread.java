@@ -1,6 +1,7 @@
 package com.ryanwongistaken.test;
 
 import android.os.Message;
+import android.util.Log;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -56,11 +57,15 @@ public class UdpClientThread extends Thread{
 //            sendState("connected");
 
             // get response
-            packet = new DatagramPacket(buf, buf.length);
+            byte[] bufResponse = new byte[65507]; //Maximum UDP datagram size minus headers
+            DatagramPacket packetReceived = new DatagramPacket(bufResponse, bufResponse.length);
+            socket.receive(packetReceived);
+
+            String line = new String(packetReceived.getData(), 0, packetReceived.getLength());
+
+            Log.d("Dev:: Received packet length", Integer.toString(packetReceived.getLength()));
 
 
-            socket.receive(packet);
-            String line = new String(packet.getData(), 0, packet.getLength());
 
             handler.sendMessage(
                     Message.obtain(handler, MainActivity.UdpClientHandler.UPDATE_MSG, line));
