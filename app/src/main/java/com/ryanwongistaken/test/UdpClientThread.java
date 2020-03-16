@@ -61,11 +61,13 @@ public class UdpClientThread extends Thread{
             DatagramPacket packetReceived = new DatagramPacket(bufResponse, bufResponse.length);
             socket.receive(packetReceived);
 
-            String line = new String(packetReceived.getData(), 0, packetReceived.getLength());
+            String line = new String(bufResponse, 0, bufResponse.length);
 
             Log.d("Dev:: Received packet length", Integer.toString(packetReceived.getLength()));
 
+            //Bitmap imgBitmap = BitmapFactory.decodeByteArray(bufResponse, 0, bufResponse.length);
 
+            int test = MainActivity.UdpClientHandler.UPDATE_END;
 
             handler.sendMessage(
                     Message.obtain(handler, MainActivity.UdpClientHandler.UPDATE_MSG, line));
