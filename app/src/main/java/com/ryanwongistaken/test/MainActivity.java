@@ -1,5 +1,6 @@
 package com.ryanwongistaken.test;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -27,17 +28,17 @@ public class MainActivity extends AppCompatActivity {
 
         textViewRx = findViewById(R.id.received);
         textViewState = findViewById(R.id.state);
-        final EditText editTextAddress = findViewById(R.id.address);
-        final EditText editTextPort = findViewById(R.id.port);
         final Button buttonConnect = findViewById(R.id.connect);
 
-        final udpHandler udpClientHandler = new udpHandler();
+        //final udpHandler udpClientHandler = new udpHandler();
 
         buttonConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i("connect button:", "button clicked!");
+                openVideoActivity();
 
+                /*
                 udpClientThread = new UdpClientThread(
                         editTextAddress.getText().toString(),
                         Integer.parseInt(editTextPort.getText().toString()),
@@ -53,9 +54,21 @@ public class MainActivity extends AppCompatActivity {
                         displayPhoto(message);
                     } else
                         Log.i("Dev:: No message received", "");
+
+                 */
                 }
         });
 
+    }
+
+    private void openVideoActivity() {
+        EditText editTextAddress = findViewById(R.id.address);
+        EditText editTextPort = findViewById(R.id.port);
+
+        Intent intent = new Intent(this, videoActivity.class);
+        intent.putExtra("address", editTextAddress.getText().toString());
+        intent.putExtra("port", editTextPort.getText().toString());
+        startActivityForResult(intent, 999);
     }
 
     private void displayPhoto(String msgString) {
