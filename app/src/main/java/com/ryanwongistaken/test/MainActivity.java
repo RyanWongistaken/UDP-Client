@@ -60,8 +60,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void displayPhoto(String msgString) {
         ImageView iv = (ImageView) findViewById(R.id.imageView);
+        //Decode string from Base64 to original image bytes
         byte[] msgByte = Base64.decode( msgString, Base64.DEFAULT);
 
+        //Convert to bitmap
         Bitmap imgBitmap = BitmapFactory.decodeByteArray(msgByte, 0, msgByte.length);
         iv.setImageBitmap(imgBitmap);
     }

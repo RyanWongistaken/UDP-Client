@@ -64,18 +64,12 @@ public class UdpClientThread extends Thread{
             DatagramPacket packetReceived = new DatagramPacket(bufResponse, bufResponse.length);
             socket.receive(packetReceived);
 
-            //String line = new String(bufResponse, StandardCharsets.US_ASCII);
-            //byte[] recByte = line.getBytes(StandardCharsets.US_ASCII);
-
+            //Decode buffered input from Base64 to ASCII
             String line = new String(packetReceived.getData(), 0, packetReceived.getLength(), StandardCharsets.US_ASCII);
-            //byte[] recByte = line.getBytes(StandardCharsets.US_ASCII);
-
-            //String line = new String(packetReceived.getData(), 0, packetReceived.getLength());
+            //Decoded data check (Server and Client should see the same data)
             byte[] recByte = Base64.decode(line, Base64.DEFAULT);
 
             Log.d("Dev:: Raw: "+ Integer.toString(packetReceived.getLength()) + " Received buffer length",  recByte.length + " Str length " + Integer.toString(line.length()));
-
-            //Bitmap imgBitmap = BitmapFactory.decodeByteArray(bufResponse, 0, bufResponse.length);
 
             int test = handler.UPDATE_END;
 
