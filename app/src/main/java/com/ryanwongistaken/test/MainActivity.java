@@ -1,32 +1,21 @@
 package com.ryanwongistaken.test;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.opencv.android.JavaCameraView;
-import org.opencv.android.BaseLoaderCallback;
-import org.opencv.android.CameraBridgeViewBase;
-import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
-import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
-import org.opencv.android.LoaderCallbackInterface;
-import org.opencv.android.OpenCVLoader;
-import org.opencv.core.Core;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
 
-    UdpClientHandler udpClientHandler;
     UdpClientThread udpClientThread;
     TextView textViewState;
     TextView textViewRx;
@@ -42,62 +31,39 @@ public class MainActivity extends AppCompatActivity {
         final EditText editTextPort = findViewById(R.id.port);
         final Button buttonConnect = findViewById(R.id.connect);
 
+        final udpHandler udpClientHandler = new udpHandler();
+
         buttonConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i("connect button:", "button clicked!");
+
                 udpClientThread = new UdpClientThread(
                         editTextAddress.getText().toString(),
                         Integer.parseInt(editTextPort.getText().toString()),
                         udpClientHandler);
+
                 udpClientThread.start();
-                //buttonConnect.setEnabled(false);
-            }
+
+                //Get data string from handler
+                String message = udpClientHandler.getMsg();
+
+                    if (message != null) {
+                        Log.i("Dev:: Received message (bytes): ", Integer.toString(message.length()));
+                        displayPhoto(message);
+                    } else
+                        Log.i("Dev:: No message received", "");
+                }
         });
+
     }
 
-    private void updateState(String state) {
-        textViewState.setText(state);
+    private void displayPhoto(String msgString) {
+        ImageView iv = (ImageView) findViewById(R.id.imageView);
+        byte[] msgByte = Base64.decode( msgString, Base64.DEFAULT);
+
+        Bitmap imgBitmap = BitmapFactory.decodeByteArray(msgByte, 0, msgByte.length);
+        iv.setImageBitmap(imgBitmap);
     }
 
-    private void updateRxMsg(String rxmsg){
-        textViewRx.append(rxmsg + "\n");
-    }
-
-    private void clientEnd(){
-        udpClientThread = null;
-        textViewState.setText("clientEnd()");
-        //buttonConnect.setEnable(true);
-    }
-
-    public static class UdpClientHandler extends Handler {
-        public static final int UPDATE_STATE = 0;
-        public static final int UPDATE_MSG = 1;
-        public static final int UPDATE_END = 2;
-        private MainActivity parent;
-
-        public UdpClientHandler(MainActivity parent) {
-            super();
-            this.parent = parent;
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-
-            switch (msg.what){
-                case UPDATE_STATE:
-                    parent.updateState((String)msg.obj);
-                    break;
-                case UPDATE_MSG:
-                    parent.updateRxMsg((String)msg.obj);
-                    break;
-                case UPDATE_END:
-                    parent.clientEnd();
-                    break;
-                default:
-                    super.handleMessage(msg);
-            }
-
-        }
-    }
 }

@@ -1,6 +1,7 @@
 package com.ryanwongistaken.test;
 
 import android.os.Message;
+import android.util.Base64;
 import android.util.Log;
 
 import java.io.IOException;
@@ -9,22 +10,24 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 
 public class UdpClientThread extends Thread{
 
     String dstAddress;
     int dstPort;
     private boolean running;
-    MainActivity.UdpClientHandler handler;
+    //MainActivity.UdpClientHandler handler;
+    udpHandler handler;
 
     DatagramSocket socket;
     InetAddress address;
 
-    public UdpClientThread(String addr, int port, MainActivity.UdpClientHandler handler) {
+    public UdpClientThread(String addr, int port, udpHandler udphandler) {
         super();
         dstAddress = addr;
         dstPort = port;
-        this.handler = handler;
+        handler = udphandler;
     }
 
     public void setRunning(boolean running){
@@ -34,7 +37,7 @@ public class UdpClientThread extends Thread{
 //    private void sendState(String state){
 //        handler.sendMessage(
 //                Message.obtain(handler,
-//                        MainActivity.UdpClientHandler.UPDATE_STATE, state));
+//                        MainActivity..UPDATE_STATE, state));
 //    }
 
     @Override
@@ -61,16 +64,23 @@ public class UdpClientThread extends Thread{
             DatagramPacket packetReceived = new DatagramPacket(bufResponse, bufResponse.length);
             socket.receive(packetReceived);
 
-            String line = new String(bufResponse, 0, bufResponse.length);
+            //String line = new String(bufResponse, StandardCharsets.US_ASCII);
+            //byte[] recByte = line.getBytes(StandardCharsets.US_ASCII);
 
-            Log.d("Dev:: Received packet length", Integer.toString(packetReceived.getLength()));
+            String line = new String(packetReceived.getData(), 0, packetReceived.getLength(), StandardCharsets.US_ASCII);
+            //byte[] recByte = line.getBytes(StandardCharsets.US_ASCII);
+
+            //String line = new String(packetReceived.getData(), 0, packetReceived.getLength());
+            byte[] recByte = Base64.decode(line, Base64.DEFAULT);
+
+            Log.d("Dev:: Raw: "+ Integer.toString(packetReceived.getLength()) + " Received buffer length",  recByte.length + " Str length " + Integer.toString(line.length()));
 
             //Bitmap imgBitmap = BitmapFactory.decodeByteArray(bufResponse, 0, bufResponse.length);
 
-            int test = MainActivity.UdpClientHandler.UPDATE_END;
+            int test = handler.UPDATE_END;
 
             handler.sendMessage(
-                    Message.obtain(handler, MainActivity.UdpClientHandler.UPDATE_MSG, line));
+                    Message.obtain(handler, handler.UPDATE_MSG, line));
 
         } catch (SocketException e) {
             e.printStackTrace();
@@ -81,7 +91,7 @@ public class UdpClientThread extends Thread{
         } finally {
             if(socket != null){
                 socket.close();
-                handler.sendEmptyMessage(MainActivity.UdpClientHandler.UPDATE_END);
+                handler.sendEmptyMessage(handler.UPDATE_END);
             }
         }
 
