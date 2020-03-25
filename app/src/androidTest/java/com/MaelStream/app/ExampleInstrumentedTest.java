@@ -1,4 +1,4 @@
-package com.ryanwongistaken.test;
+package com.MaelStream.app;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.ryanwongistaken.test", appContext.getPackageName());
+        assertEquals("com.MaelStream.test", appContext.getPackageName());
     }
 }

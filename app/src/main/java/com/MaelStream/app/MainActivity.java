@@ -1,4 +1,4 @@
-package com.ryanwongistaken.test;
+package com.MaelStream.app;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    //Initializations
     UdpClientThread udpClientThread;
     TextView textViewState;
     TextView textViewRx;

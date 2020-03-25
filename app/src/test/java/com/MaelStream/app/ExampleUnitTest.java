@@ -1,4 +1,4 @@
-package com.ryanwongistaken.test;
+package com.MaelStream.app;
 
 import org.junit.Test;
 
