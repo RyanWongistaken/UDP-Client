@@ -65,6 +65,10 @@ public class videoActivity extends AppCompatActivity {
 
     }
 
+    /* Refresh the Image
+    *
+    *
+     */
     private void updateState(String rawData) {
         //textViewState.setText(state);
         ImageView wispImage = (ImageView) findViewById(R.id.wispView);
