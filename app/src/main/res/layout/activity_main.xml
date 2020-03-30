@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:autoLink="web"
-        android:text="I wanna die "
+        android:text="Connect to Server"
         android:textStyle="bold" />
 
     <EditText
@@ -49,13 +49,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18dp" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="242dp"
-        android:baselineAligned="false"
-        android:src="@android:color/background_dark" />
 
 </LinearLayout>
 

@@ -1,15 +1,11 @@
 package com.MaelStream.app;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -71,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, 999);
     }
 
+    /*
     private void displayPhoto(String msgString) {
         ImageView iv = (ImageView) findViewById(R.id.imageView);
         //Decode string from Base64 to original image bytes
@@ -80,5 +77,5 @@ public class MainActivity extends AppCompatActivity {
         Bitmap imgBitmap = BitmapFactory.decodeByteArray(msgByte, 0, msgByte.length);
         iv.setImageBitmap(imgBitmap);
     }
-
+    */
 }
