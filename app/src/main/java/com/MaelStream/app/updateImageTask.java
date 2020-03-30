@@ -33,7 +33,7 @@ public class updateImageTask extends AsyncTask<String, Void, String> {
             port = Integer.parseInt(params[1]);
             Log.i("Dev:: Connected to: ", params[0]+ " | " + params[1]);
             // send request
-            byte[] buf = "get".getBytes("UTF-8");
+            byte[] buf = "get".getBytes(StandardCharsets.UTF_8);
             DatagramPacket packet = new DatagramPacket(buf, buf.length, serverAddress, port);
             socket.send(packet);
 
@@ -45,7 +45,7 @@ public class updateImageTask extends AsyncTask<String, Void, String> {
             dataLine = new String(packetReceived.getData(), 0, packetReceived.getLength(), StandardCharsets.US_ASCII);
             //Decoded data check (Server and Client should see the same data)
             byte[] recByte = Base64.decode(dataLine, Base64.DEFAULT);
-            Log.d("Dev:: Raw: "+ Integer.toString(packetReceived.getLength()) + " Received buffer length",  recByte.length + " Str length " + Integer.toString(dataLine.length()));
+            Log.d("Dev:: Raw: "+ packetReceived.getLength() + " Received buffer length",  recByte.length + " Str length " + dataLine.length());
 
         } catch (SocketException e){
             Log.i("Dev::", "Socket exception");
