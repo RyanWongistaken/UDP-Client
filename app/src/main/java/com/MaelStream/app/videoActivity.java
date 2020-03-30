@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Base64;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,14 +29,24 @@ public class videoActivity extends AppCompatActivity {
         viewAddress.setText(serverAddress);
         viewPort.setText(serverPort);
 
+        final Button buttonClose = findViewById(R.id.btnReturn);
+
         //String[] ipData = {serverAddress, serverPort};
 
         //udpConnect = new Thread(new clientReceive(serverAddress, serverPort)).start();
         UdpClientHandler udpClientHandler = new UdpClientHandler(this);
 
-        clientReceive udpClient = new clientReceive(serverAddress, serverPort, udpClientHandler);
+        final clientReceive udpClient = new clientReceive(serverAddress, serverPort, udpClientHandler);
         Thread udpThread = new Thread(udpClient);
         udpThread.start();
+
+        buttonClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                udpClient.terminate();
+                finish();
+            }
+        });
 
         /*
         updateImageTask obj = new updateImageTask();
@@ -50,7 +62,6 @@ public class videoActivity extends AppCompatActivity {
         }
 
          */
-
 
     }
 
