@@ -10,8 +10,10 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 // OpenCV imports
 import org.opencv.android.BaseLoaderCallback;
@@ -27,6 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class videoActivity extends AppCompatActivity {
 
     Mat frameHolder1;
+    Boolean imageFilter = false;
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -63,11 +66,8 @@ public class videoActivity extends AppCompatActivity {
 
         final Button buttonClose = findViewById(R.id.btnReturn);
 
-        //String[] ipData = {serverAddress, serverPort};
-
-        //udpConnect = new Thread(new clientReceive(serverAddress, serverPort)).start();
+        //Create UDP Thread
         UdpClientHandler udpClientHandler = new UdpClientHandler(this);
-
         final clientReceive udpClient = new clientReceive(serverAddress, serverPort, udpClientHandler);
         Thread udpThread = new Thread(udpClient);
         udpThread.start();
@@ -77,6 +77,17 @@ public class videoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 udpClient.terminate();
                 finish();
+            }
+        });
+
+        final ToggleButton toggle = (ToggleButton) findViewById(R.id.toggleButton);
+        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    imageFilter = true;
+                } else {
+                    imageFilter = false;
+                }
             }
         });
 
@@ -106,16 +117,16 @@ public class videoActivity extends AppCompatActivity {
         ImageView wispImage = findViewById(R.id.wispView);
         byte[] msgByte = Base64.decode(rawData, Base64.DEFAULT);
         Bitmap imgBitmap = BitmapFactory.decodeByteArray(msgByte, 0, msgByte.length);
-
+        Log.i("Dev:: Image Filter? | ", imageFilter.toString());
         // Check if OpenCV is loaded first
-        if (OpenCVLoader.initDebug()) {
+        if (OpenCVLoader.initDebug() && imageFilter) {
             // Create blank canvas
             frameHolder1 = new Mat();
             // change bitmap to canvans
             Utils.bitmapToMat(imgBitmap, frameHolder1);
 
             //manipulate image
-            Imgproc.cvtColor(frameHolder1, frameHolder1, Imgproc.COLOR_BGR2HSV);
+            Imgproc.cvtColor(frameHolder1, frameHolder1, Imgproc.COLOR_BGR2GRAY);
 
             // convert back to bitmap
             Utils.matToBitmap(frameHolder1, imgBitmap);

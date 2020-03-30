@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,32 +27,13 @@ public class MainActivity extends AppCompatActivity {
         textViewState = findViewById(R.id.state);
         final Button buttonConnect = findViewById(R.id.connect);
 
-        //final udpHandler udpClientHandler = new udpHandler();
 
         buttonConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i("connect button:", "button clicked!");
+
                 openVideoActivity();
-
-                /*
-                udpClientThread = new UdpClientThread(
-                        editTextAddress.getText().toString(),
-                        Integer.parseInt(editTextPort.getText().toString()),
-                        udpClientHandler);
-
-                udpClientThread.start();
-
-                //Get data string from handler
-                String message = udpClientHandler.getMsg();
-
-                    if (message != null) {
-                        Log.i("Dev:: Received message (bytes): ", Integer.toString(message.length()));
-                        displayPhoto(message);
-                    } else
-                        Log.i("Dev:: No message received", "");
-
-                 */
                 }
         });
 
@@ -61,10 +43,15 @@ public class MainActivity extends AppCompatActivity {
         EditText editTextAddress = findViewById(R.id.address);
         EditText editTextPort = findViewById(R.id.port);
 
-        Intent intent = new Intent(this, videoActivity.class);
-        intent.putExtra("address", editTextAddress.getText().toString());
-        intent.putExtra("port", editTextPort.getText().toString());
-        startActivityForResult(intent, 999);
+        if(editTextAddress.getText().toString().isEmpty() || editTextPort.getText().toString().isEmpty()){
+            Toast.makeText(getApplicationContext(), "Please enter server and port to connect", Toast.LENGTH_LONG).show();
+        }
+        else {
+            Intent intent = new Intent(this, videoActivity.class);
+            intent.putExtra("address", editTextAddress.getText().toString());
+            intent.putExtra("port", editTextPort.getText().toString());
+            startActivityForResult(intent, 999);
+        }
     }
 
     /*
