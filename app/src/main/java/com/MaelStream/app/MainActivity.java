@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean validatePort(String port){
-        Pattern pattern = Pattern.compile("\\d{5}");
+        Pattern pattern = Pattern.compile("\\d{1,5}");
         Matcher match = pattern.matcher(port);
         return match.find();
     }
