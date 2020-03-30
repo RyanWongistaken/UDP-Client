@@ -51,7 +51,7 @@ public class UdpClientThread extends Thread{
             address = InetAddress.getByName(dstAddress);
 
             // send request
-            byte[] buf = "get".getBytes("UTF-8");
+            byte[] buf = "get".getBytes(StandardCharsets.UTF_8);
 
             DatagramPacket packet =
                     new DatagramPacket(buf, buf.length, address, dstPort);
@@ -69,12 +69,12 @@ public class UdpClientThread extends Thread{
             //Decoded data check (Server and Client should see the same data)
             byte[] recByte = Base64.decode(line, Base64.DEFAULT);
 
-            Log.d("Dev:: Raw: "+ Integer.toString(packetReceived.getLength()) + " Received buffer length",  recByte.length + " Str length " + Integer.toString(line.length()));
+            Log.d("Dev:: Raw: "+ packetReceived.getLength() + " Received buffer length",  recByte.length + " Str length " + line.length());
 
-            int test = handler.UPDATE_END;
+            int test = udpHandler.UPDATE_END;
 
             handler.sendMessage(
-                    Message.obtain(handler, handler.UPDATE_MSG, line));
+                    Message.obtain(handler, udpHandler.UPDATE_MSG, line));
 
         } catch (SocketException e) {
             e.printStackTrace();
@@ -85,7 +85,7 @@ public class UdpClientThread extends Thread{
         } finally {
             if(socket != null){
                 socket.close();
-                handler.sendEmptyMessage(handler.UPDATE_END);
+                handler.sendEmptyMessage(udpHandler.UPDATE_END);
             }
         }
 

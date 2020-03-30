@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="CLOSE"
+        android:text="DISCONNECT"
         app:layout_constraintEnd_toEndOf="@+id/wispView"
         app:layout_constraintStart_toStartOf="@+id/wispView"
         app:layout_constraintTop_toBottomOf="@+id/wispView" />
@@ -46,4 +46,24 @@
         app:layout_constraintEnd_toStartOf="@+id/btnReturn"
         app:layout_constraintStart_toEndOf="@+id/textAddr"
         app:layout_constraintTop_toTopOf="@+id/btnReturn" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Toggle"
+        app:layout_constraintEnd_toEndOf="@+id/btnReturn"
+        app:layout_constraintHorizontal_bias="0.627"
+        app:layout_constraintStart_toStartOf="@+id/btnReturn"
+        app:layout_constraintTop_toBottomOf="@+id/btnReturn" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Grayscale"
+        app:layout_constraintBottom_toTopOf="@+id/toggleButton"
+        app:layout_constraintEnd_toEndOf="@+id/toggleButton"
+        app:layout_constraintStart_toStartOf="@+id/toggleButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

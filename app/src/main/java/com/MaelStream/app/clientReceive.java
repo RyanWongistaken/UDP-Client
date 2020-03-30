@@ -48,7 +48,7 @@ public class clientReceive implements Runnable {
                 //Log.i("Dev:: Connected to: ", _address + " | " + _port);
 
                 // send request
-                byte[] buf = "get".getBytes("UTF-8");
+                byte[] buf = "get".getBytes(StandardCharsets.UTF_8);
                 DatagramPacket packet = new DatagramPacket(buf, buf.length, _serverAddress, Integer.parseInt(_port));
                 _socket.send(packet);
 

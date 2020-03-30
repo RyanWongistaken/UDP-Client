@@ -7,8 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,45 +30,52 @@ public class MainActivity extends AppCompatActivity {
         textViewState = findViewById(R.id.state);
         final Button buttonConnect = findViewById(R.id.connect);
 
-        //final udpHandler udpClientHandler = new udpHandler();
 
         buttonConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i("connect button:", "button clicked!");
+
                 openVideoActivity();
-
-                /*
-                udpClientThread = new UdpClientThread(
-                        editTextAddress.getText().toString(),
-                        Integer.parseInt(editTextPort.getText().toString()),
-                        udpClientHandler);
-
-                udpClientThread.start();
-
-                //Get data string from handler
-                String message = udpClientHandler.getMsg();
-
-                    if (message != null) {
-                        Log.i("Dev:: Received message (bytes): ", Integer.toString(message.length()));
-                        displayPhoto(message);
-                    } else
-                        Log.i("Dev:: No message received", "");
-
-                 */
                 }
         });
 
+    }
+
+    private boolean validateIP(String ipAddress){
+        Pattern pattern = Pattern.compile("^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$");
+        Matcher match = pattern.matcher(ipAddress);
+        return match.find();
+    }
+
+    private boolean validatePort(String port){
+        Pattern pattern = Pattern.compile("\\d{1,5}");
+        Matcher match = pattern.matcher(port);
+        return match.find();
     }
 
     private void openVideoActivity() {
         EditText editTextAddress = findViewById(R.id.address);
         EditText editTextPort = findViewById(R.id.port);
 
-        Intent intent = new Intent(this, videoActivity.class);
-        intent.putExtra("address", editTextAddress.getText().toString());
-        intent.putExtra("port", editTextPort.getText().toString());
-        startActivityForResult(intent, 999);
+        if(editTextAddress.getText().toString().isEmpty() || editTextPort.getText().toString().isEmpty()){
+            Toast.makeText(getApplicationContext(), "Please enter server and port to connect! ", Toast.LENGTH_LONG).show();
+            Log.i("IP:: ", Boolean.toString(validateIP(editTextAddress.getText().toString())));
+        }
+        else {
+
+            Boolean isIpValid = validateIP(editTextAddress.getText().toString());
+            Boolean isPortValid = validatePort(editTextPort.getText().toString());
+
+            if(isIpValid && isPortValid) {
+                Intent intent = new Intent(this, videoActivity.class);
+                intent.putExtra("address", editTextAddress.getText().toString());
+                intent.putExtra("port", editTextPort.getText().toString());
+                startActivityForResult(intent, 999);
+            }
+            else
+                Toast.makeText(getApplicationContext(), "Please enter valid server and port!", Toast.LENGTH_LONG).show();
+        }
     }
 
     /*

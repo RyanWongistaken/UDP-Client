@@ -7,12 +7,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 // OpenCV imports
+import org.opencv.android.BaseLoaderCallback;
+import org.opencv.android.LoaderCallbackInterface;
+import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
@@ -22,8 +28,30 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class videoActivity extends AppCompatActivity {
 
+    Mat frameHolder1;
+    Boolean imageFilter = false;
+
+    private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
+        @Override
+        public void onManagerConnected(int status) {
+            switch (status) {
+                case LoaderCallbackInterface.SUCCESS:
+                {
+                    Log.i("Dev:: OpenCV", "OpenCV loaded successfully");
+                    frameHolder1=new Mat();
+                } break;
+                default:
+                {
+                    Log.i("Dev:: OpenCV", "OpenCV not loaded successfully");
+                    super.onManagerConnected(status);
+                } break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
 
@@ -38,11 +66,8 @@ public class videoActivity extends AppCompatActivity {
 
         final Button buttonClose = findViewById(R.id.btnReturn);
 
-        //String[] ipData = {serverAddress, serverPort};
-
-        //udpConnect = new Thread(new clientReceive(serverAddress, serverPort)).start();
+        //Create UDP Thread
         UdpClientHandler udpClientHandler = new UdpClientHandler(this);
-
         final clientReceive udpClient = new clientReceive(serverAddress, serverPort, udpClientHandler);
         Thread udpThread = new Thread(udpClient);
         udpThread.start();
@@ -52,6 +77,17 @@ public class videoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 udpClient.terminate();
                 finish();
+            }
+        });
+
+        final ToggleButton toggle = (ToggleButton) findViewById(R.id.toggleButton);
+        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    imageFilter = true;
+                } else {
+                    imageFilter = false;
+                }
             }
         });
 
@@ -78,20 +114,23 @@ public class videoActivity extends AppCompatActivity {
      */
     private void updateState(String rawData) {
         //textViewState.setText(state);
-        ImageView wispImage = (ImageView) findViewById(R.id.wispView);
+        ImageView wispImage = findViewById(R.id.wispView);
         byte[] msgByte = Base64.decode(rawData, Base64.DEFAULT);
         Bitmap imgBitmap = BitmapFactory.decodeByteArray(msgByte, 0, msgByte.length);
+        Log.i("Dev:: Image Filter? | ", imageFilter.toString());
+        // Check if OpenCV is loaded first
+        if (OpenCVLoader.initDebug() && imageFilter) {
+            // Create blank canvas
+            frameHolder1 = new Mat();
+            // change bitmap to canvans
+            Utils.bitmapToMat(imgBitmap, frameHolder1);
 
-        // Create blank canvas
-        Mat frameHolder1 = new Mat();
-        // change bitmap to canvans
-        Utils.bitmapToMat(imgBitmap, frameHolder1);
+            //manipulate image
+            Imgproc.cvtColor(frameHolder1, frameHolder1, Imgproc.COLOR_BGR2GRAY);
 
-        //manipulate image
-        Imgproc.cvtColor(frameHolder1, frameHolder1, Imgproc.COLOR_BGR2GRAY);
-
-        // convert back to bitmap
-        Utils.matToBitmap(frameHolder1, imgBitmap);
+            // convert back to bitmap
+            Utils.matToBitmap(frameHolder1, imgBitmap);
+        }
 
         wispImage.setImageBitmap(imgBitmap);
     }
