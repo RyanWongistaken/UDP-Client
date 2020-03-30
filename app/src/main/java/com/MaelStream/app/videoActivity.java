@@ -2,6 +2,7 @@ package com.MaelStream.app;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+// OpenCV imports
+import org.opencv.android.Utils;
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -74,6 +81,18 @@ public class videoActivity extends AppCompatActivity {
         ImageView wispImage = (ImageView) findViewById(R.id.wispView);
         byte[] msgByte = Base64.decode(rawData, Base64.DEFAULT);
         Bitmap imgBitmap = BitmapFactory.decodeByteArray(msgByte, 0, msgByte.length);
+
+        // Create blank canvas
+        Mat frameHolder1 = new Mat();
+        // change bitmap to canvans
+        Utils.bitmapToMat(imgBitmap, frameHolder1);
+
+        //manipulate image
+        Imgproc.cvtColor(frameHolder1, frameHolder1, Imgproc.COLOR_BGR2GRAY);
+
+        // convert back to bitmap
+        Utils.matToBitmap(frameHolder1, imgBitmap);
+
         wispImage.setImageBitmap(imgBitmap);
     }
 

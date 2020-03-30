@@ -22,7 +22,7 @@ public class UPD_ClientTest {
 
     /**
      * Desc:
-     *  Simulates user inputs when testing the app
+     *
      *
      * Bugs:
      *  None atm
