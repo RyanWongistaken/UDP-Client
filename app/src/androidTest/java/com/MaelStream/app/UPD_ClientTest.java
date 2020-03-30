@@ -31,9 +31,12 @@ public class UPD_ClientTest {
     public void streamWorking() throws Exception {
         // Type in IP address and port number in use
         onView(withId(R.id.address)).perform(typeText("192.168.1.74"), closeSoftKeyboard());
-        onView(withId(R.id.address)).perform(typeText("10080"), closeSoftKeyboard());
+        onView(withId(R.id.port)).perform(typeText("10080"), closeSoftKeyboard());
 
         // Connect to the video
         onView(withId(R.id.connect)).perform(click());
+
+        //Close screen
+        onView(withId(R.id.btnReturn)).perform(click());
     }
 }

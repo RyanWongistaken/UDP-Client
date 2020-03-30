@@ -22,14 +22,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="dstAddress"
-        android:text="192.168.1.74" />
+        android:text="" />
 
     <EditText
         android:id="@+id/port"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="dstPort"
-        android:text="10080" />
+        android:text="" />
 
     <Button
         android:id="@+id/connect"
