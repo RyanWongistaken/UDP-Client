@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textViewRx = findViewById(R.id.received);
-        textViewState = findViewById(R.id.state);
+        //textViewRx = findViewById(R.id.received);
+        //textViewState = findViewById(R.id.state);
         final Button buttonConnect = findViewById(R.id.connect);
 
 

@@ -31,7 +31,7 @@ public class UPD_ClientTest {
 
     // Acceptable Inputs for Address and Port Test
     private static final String correctAddress = "192.168.1.74";
-    private static final String correctPort = "4618"
+    private static final String correctPort = "4618";
 
     @Rule
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);
@@ -63,6 +63,9 @@ public class UPD_ClientTest {
         onView(withId(R.id.address)).perform(typeText(incorrectAddress), closeSoftKeyboard());
         onView(withId(R.id.port)).perform(typeText(incorrectPort), closeSoftKeyboard());
         onView(withId(R.id.connect)).perform(click());
+
+        //Close screen
+        onView(withId(R.id.btnReturn)).perform(click());
 
         onView(withId(R.id.address)).perform(clearText(), closeSoftKeyboard());
         onView(withId(R.id.port)).perform(clearText(), closeSoftKeyboard());
