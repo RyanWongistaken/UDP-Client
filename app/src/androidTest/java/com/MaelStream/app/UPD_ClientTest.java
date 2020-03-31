@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -49,13 +50,22 @@ public class UPD_ClientTest {
         onView(withId(R.id.port)).perform(typeText(emptyPort), closeSoftKeyboard());
         onView(withId(R.id.connect)).perform(click());
 
+        onView(withId(R.id.address)).perform(clearText(), closeSoftKeyboard());
+        onView(withId(R.id.port)).perform(clearText(), closeSoftKeyboard());
+
         onView(withId(R.id.address)).perform(typeText(formatAddress), closeSoftKeyboard());
         onView(withId(R.id.port)).perform(typeText(formatPort), closeSoftKeyboard());
         onView(withId(R.id.connect)).perform(click());
 
+        onView(withId(R.id.address)).perform(clearText(), closeSoftKeyboard());
+        onView(withId(R.id.port)).perform(clearText(), closeSoftKeyboard());
+
         onView(withId(R.id.address)).perform(typeText(incorrectAddress), closeSoftKeyboard());
         onView(withId(R.id.port)).perform(typeText(incorrectPort), closeSoftKeyboard());
         onView(withId(R.id.connect)).perform(click());
+
+        onView(withId(R.id.address)).perform(clearText(), closeSoftKeyboard());
+        onView(withId(R.id.port)).perform(clearText(), closeSoftKeyboard());
 
         // Type in valid IP address and port number
         onView(withId(R.id.address)).perform(typeText(correctAddress), closeSoftKeyboard());
