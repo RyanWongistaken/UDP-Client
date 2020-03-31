@@ -37,18 +37,5 @@
         android:layout_height="wrap_content"
         android:text="Connect" />
 
-    <TextView
-        android:id="@+id/state"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="un-initiated"
-        android:textSize="20dp" />
-
-    <TextView
-        android:id="@+id/received"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18dp" />
-
 </LinearLayout>
 
