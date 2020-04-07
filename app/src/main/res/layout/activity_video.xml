@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".videoActivity">
+
+    <ImageView
+        android:id="@+id/wispView"
+        android:layout_width="366dp"
+        android:layout_height="340dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:color/background_dark" />
+
+    <Button
+        android:id="@+id/btnReturn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="DISCONNECT"
+        app:layout_constraintEnd_toEndOf="@+id/wispView"
+        app:layout_constraintStart_toStartOf="@+id/wispView"
+        app:layout_constraintTop_toBottomOf="@+id/wispView" />
+
+    <TextView
+        android:id="@+id/textAddr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address"
+        app:layout_constraintStart_toStartOf="@+id/wispView"
+        app:layout_constraintTop_toTopOf="@+id/textPort" />
+
+    <TextView
+        android:id="@+id/textPort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:text="Port"
+        app:layout_constraintEnd_toStartOf="@+id/btnReturn"
+        app:layout_constraintStart_toEndOf="@+id/textAddr"
+        app:layout_constraintTop_toTopOf="@+id/btnReturn" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Toggle"
+        app:layout_constraintEnd_toEndOf="@+id/btnReturn"
+        app:layout_constraintHorizontal_bias="0.627"
+        app:layout_constraintStart_toStartOf="@+id/btnReturn"
+        app:layout_constraintTop_toBottomOf="@+id/btnReturn" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Grayscale"
+        app:layout_constraintBottom_toTopOf="@+id/toggleButton"
+        app:layout_constraintEnd_toEndOf="@+id/toggleButton"
+        app:layout_constraintStart_toStartOf="@+id/toggleButton" />
+</androidx.constraintlayout.widget.ConstraintLayout>
