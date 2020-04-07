@@ -91,21 +91,6 @@ public class videoActivity extends AppCompatActivity {
             }
         });
 
-        /*
-        updateImageTask obj = new updateImageTask();
-
-        try {
-            String img = obj.execute(ipData).get();
-            byte[] msgByte = Base64.decode(img, Base64.DEFAULT);
-            Bitmap imgBitmap = BitmapFactory.decodeByteArray(msgByte, 0, msgByte.length);
-            wispImage.setImageBitmap(imgBitmap);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-         */
-
     }
 
     /* Refresh the Image

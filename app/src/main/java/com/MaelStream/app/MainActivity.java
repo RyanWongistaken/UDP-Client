@@ -17,7 +17,6 @@ import java.util.regex.Pattern;
 public class MainActivity extends AppCompatActivity {
 
     //Initializations
-    UdpClientThread udpClientThread;
     TextView textViewState;
     TextView textViewRx;
 
