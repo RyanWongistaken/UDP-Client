@@ -26,6 +26,8 @@ import org.opencv.imgproc.Imgproc;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.MaelStream.app.networkPackage.clientReceive;
+
 public class videoActivity extends AppCompatActivity {
 
     Mat frameHolder1;

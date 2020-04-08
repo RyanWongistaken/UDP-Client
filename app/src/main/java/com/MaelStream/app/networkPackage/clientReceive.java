@@ -1,8 +1,10 @@
-package com.MaelStream.app;
+package com.MaelStream.app.networkPackage;
 
 import android.os.Message;
 import android.util.Base64;
 import android.util.Log;
+
+import com.MaelStream.app.videoActivity;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
