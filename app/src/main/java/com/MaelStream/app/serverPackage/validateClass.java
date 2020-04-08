@@ -11,8 +11,13 @@ public class validateClass {
     }
 
     public boolean Port(String port){
-        Pattern pattern = Pattern.compile("\\d{1,5}");
-        Matcher match = pattern.matcher(port);
-        return match.find();
+        if(port.length() > 5){
+            return false;
+        }
+        else {
+            Pattern pattern = Pattern.compile("\\d{1,5}");
+            Matcher match = pattern.matcher(port);
+            return match.find();
+        }
     }
 }
