@@ -31,7 +31,7 @@ public class UPD_ClientTest {
 
     // Acceptable Inputs for Address and Port Test
     private static final String correctAddress = "192.168.1.74";
-    private static final String correctPort = "4618";
+    private static final String correctPort = "7855";
 
     @Rule
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);

@@ -50,11 +50,13 @@ public class MainActivity extends AppCompatActivity {
         EditText editTextAddress = findViewById(R.id.address);
         EditText editTextPort = findViewById(R.id.port);
 
+        validate = new validateClass();
+
         serverClass server = new serverClass(editTextAddress.getText().toString(), editTextPort.getText().toString());
 
         if(server.getIP().isEmpty() || server.getPort().isEmpty()){
             Toast.makeText(getApplicationContext(), "Please enter server and port to connect! ", Toast.LENGTH_LONG).show();
-            Log.i("IP:: ", Boolean.toString(validate.IP(server.getIP())));
+            //Log.i("IP:: ", Boolean.toString(validate.IP(server.getIP())));
         }
         else {
 
