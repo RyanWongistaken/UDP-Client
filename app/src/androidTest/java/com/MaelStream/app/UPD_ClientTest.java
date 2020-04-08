@@ -24,14 +24,14 @@ public class UPD_ClientTest {
     private static final String emptyPort = "";
 
     private static final String incorrectAddress = "192.168.1.70";
-    private static final String incorrectPort = "4424";
+    private static final String incorrectPort = "4425";
 
     private static final String formatAddress = "192168174";
     private static final String formatPort = "wasde";
 
     // Acceptable Inputs for Address and Port Test
     private static final String correctAddress = "192.168.1.74";
-    private static final String correctPort = "4618";
+    private static final String correctPort = "7855";
 
     @Rule
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);
