@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context="com.blogspot.android_er.androidudpclient.MainActivity">
+    tools:context=".MainActivity">
 
     <TextView
         android:layout_width="wrap_content"

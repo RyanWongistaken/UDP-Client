@@ -4,6 +4,7 @@ import android.os.Message;
 import android.util.Base64;
 import android.util.Log;
 
+import com.MaelStream.app.serverPackage.serverClass;
 import com.MaelStream.app.videoActivity;
 
 import java.io.IOException;
@@ -17,16 +18,14 @@ import java.nio.charset.StandardCharsets;
 
 public class clientReceive implements Runnable {
     DatagramSocket _socket;
-    String _address;
-    String _port;
+    serverClass server;
     InetAddress _serverAddress;
     videoActivity.UdpClientHandler handler;
     boolean run = false;
 
     public clientReceive(String ipAddress, String socketPort, videoActivity.UdpClientHandler handler){
         super();
-        _address = ipAddress;
-        _port = socketPort;
+        server = new serverClass(ipAddress, socketPort);
         this.handler = handler;
     }
 
@@ -44,14 +43,14 @@ public class clientReceive implements Runnable {
                 //Log.i("Dev::", "Connection success");
                 _socket = new DatagramSocket();
                 //Log.i("Dev::", "Socket created");
-                _serverAddress = InetAddress.getByName(_address);
+                _serverAddress = InetAddress.getByName(server.getIP());
                 //Log.i("Dev::", "Address created");
 
-                //Log.i("Dev:: Connected to: ", _address + " | " + _port);
+                //Log.i("Dev:: Connected to: ", server.getIP() + " | " + server.getPort());
 
                 // send request
                 byte[] buf = "get".getBytes(StandardCharsets.UTF_8);
-                DatagramPacket packet = new DatagramPacket(buf, buf.length, _serverAddress, Integer.parseInt(_port));
+                DatagramPacket packet = new DatagramPacket(buf, buf.length, _serverAddress, Integer.parseInt(server.getPort()));
                 _socket.send(packet);
 
                 _socket.setSoTimeout(100);
