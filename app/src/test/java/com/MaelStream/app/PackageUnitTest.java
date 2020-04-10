@@ -19,7 +19,7 @@ public class PackageUnitTest {
 
         validateClass validate = new validateClass();
 
-        assertEquals(true, validate.IP(ip));
+        assertTrue(validate.IP(ip));
     }
 
     @Test
@@ -28,7 +28,7 @@ public class PackageUnitTest {
 
         validateClass validate = new validateClass();
 
-        assertEquals(false, validate.IP(ip));
+        assertFalse(validate.IP(ip));
     }
 
     @Test
@@ -37,7 +37,7 @@ public class PackageUnitTest {
 
         validateClass validate = new validateClass();
 
-        assertEquals(false, validate.IP(ip));
+        assertFalse(validate.IP(ip));
     }
 
     @Test
@@ -46,7 +46,7 @@ public class PackageUnitTest {
 
         validateClass validate = new validateClass();
 
-        assertEquals(true, validate.Port(port));
+        assertTrue(validate.Port(port));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class PackageUnitTest {
 
         validateClass validate = new validateClass();
 
-        assertEquals(false, validate.Port(port));
+        assertFalse(validate.Port(port));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class PackageUnitTest {
 
         validateClass validate = new validateClass();
 
-        assertEquals(false, validate.Port(port));
+        assertFalse(validate.Port(port));
     }
 
 

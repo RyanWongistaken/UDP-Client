@@ -30,8 +30,8 @@ import com.MaelStream.app.networkPackage.clientReceive;
 
 public class videoActivity extends AppCompatActivity {
 
-    Mat frameHolder1;
-    Boolean imageFilter = false;
+    private Mat frameHolder1;
+    private Boolean imageFilter = false;
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -85,11 +85,7 @@ public class videoActivity extends AppCompatActivity {
         final ToggleButton toggle = (ToggleButton) findViewById(R.id.toggleButton);
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    imageFilter = true;
-                } else {
-                    imageFilter = false;
-                }
+                imageFilter = isChecked;
             }
         });
 

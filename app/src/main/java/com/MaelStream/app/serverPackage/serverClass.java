@@ -1,8 +1,8 @@
 package com.MaelStream.app.serverPackage;
 
 public class serverClass {
-    String ipAddress;
-    String Port;
+    private String ipAddress;
+    private String Port;
 
     public serverClass(String ip, String port){
         ipAddress = ip;
