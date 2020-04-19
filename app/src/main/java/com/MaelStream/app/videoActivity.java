@@ -3,6 +3,7 @@ package com.MaelStream.app;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -32,6 +33,7 @@ public class videoActivity extends AppCompatActivity {
 
     private Mat frameHolder1;
     private Boolean imageFilter = false;
+    AnimationDrawable logoAnimated;
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -52,10 +54,20 @@ public class videoActivity extends AppCompatActivity {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        logoAnimated.start();
+    }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
+
+        ImageView imageAni = findViewById(R.id.logoAnimate);
+
+        imageAni.setBackgroundResource(R.drawable.animation);
+        logoAnimated = (AnimationDrawable) imageAni.getBackground();
 
         TextView viewAddress = findViewById(R.id.textAddr);
         TextView viewPort = findViewById(R.id.textPort);
