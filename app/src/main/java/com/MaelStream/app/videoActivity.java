@@ -3,6 +3,7 @@ package com.MaelStream.app;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -26,10 +27,13 @@ import org.opencv.imgproc.Imgproc;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.MaelStream.app.networkPackage.clientReceive;
+
 public class videoActivity extends AppCompatActivity {
 
-    Mat frameHolder1;
-    Boolean imageFilter = false;
+    private Mat frameHolder1;
+    private Boolean imageFilter = false;
+    AnimationDrawable logoAnimated;
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -50,10 +54,20 @@ public class videoActivity extends AppCompatActivity {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        logoAnimated.start();
+    }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
+
+        ImageView imageAni = findViewById(R.id.logoAnimate);
+
+        imageAni.setBackgroundResource(R.drawable.animation);
+        logoAnimated = (AnimationDrawable) imageAni.getBackground();
 
         TextView viewAddress = findViewById(R.id.textAddr);
         TextView viewPort = findViewById(R.id.textPort);
@@ -83,28 +97,9 @@ public class videoActivity extends AppCompatActivity {
         final ToggleButton toggle = (ToggleButton) findViewById(R.id.toggleButton);
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    imageFilter = true;
-                } else {
-                    imageFilter = false;
-                }
+                imageFilter = isChecked;
             }
         });
-
-        /*
-        updateImageTask obj = new updateImageTask();
-
-        try {
-            String img = obj.execute(ipData).get();
-            byte[] msgByte = Base64.decode(img, Base64.DEFAULT);
-            Bitmap imgBitmap = BitmapFactory.decodeByteArray(msgByte, 0, msgByte.length);
-            wispImage.setImageBitmap(imgBitmap);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-         */
 
     }
 
